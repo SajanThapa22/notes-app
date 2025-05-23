@@ -24,6 +24,10 @@ export default function RootLayout() {
         name="index"
         options={{ title: "Home", headerTitleAlign: "center" }}
       />
+      <Stack.Screen
+        name="notes"
+        options={{ headerTitle: "Notes", headerTitleAlign: "center" }}
+      />
     </Stack>
   );
 }
