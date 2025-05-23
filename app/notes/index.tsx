@@ -24,6 +24,16 @@ const NoteScreen = () => {
     { id: 4, text: "Note four" },
   ]);
 
+  const setNewNotes = () => {
+    const note = {
+      id: notes.length + 1,
+      text: newNote,
+    };
+    setNotes((prevNotes) => [...prevNotes, note]);
+    setNewNote("");
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -35,7 +45,10 @@ const NoteScreen = () => {
           </View>
         )}
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        onPress={() => setModalVisible(true)}
+        style={styles.button}
+      >
         <Text style={styles.buttonText}>+Add Notes</Text>
       </TouchableOpacity>
 
@@ -54,7 +67,7 @@ const NoteScreen = () => {
               placeholder="Enter note..."
               placeholderTextColor="#aaa"
               value={newNote}
-              //   onChangeText={setNewNote()}
+              onChangeText={(text) => setNewNote(text)}
             />
             <View style={styles.modalButtons}>
               <TouchableOpacity
@@ -63,8 +76,13 @@ const NoteScreen = () => {
               >
                 <Text style={styles.cancelButtonText}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.saveButton}>
-                <Text style={styles.saveButtonText}>Cancel</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setNewNotes();
+                }}
+                style={styles.saveButton}
+              >
+                <Text style={styles.saveButtonText}>Save</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -112,6 +130,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 8,
     padding: 10,
+    marginBottom: 10,
   },
   modalOverlay: {
     flex: 1,
