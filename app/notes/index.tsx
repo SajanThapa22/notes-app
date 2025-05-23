@@ -1,18 +1,8 @@
+import AddNoteModal from "@/components/AddNoteModal";
+import NoteList from "@/components/NoteList";
+import { Note } from "@/types/notes";
 import { useState } from "react";
-import {
-  FlatList,
-  Modal,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native"; // ✅ Added Text import
-
-interface Note {
-  id: number;
-  text: string;
-}
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const NoteScreen = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -24,7 +14,8 @@ const NoteScreen = () => {
     { id: 4, text: "Note four" },
   ]);
 
-  const setNewNotes = () => {
+  const addNote = () => {
+    if (newNote.trim() === "") return;
     const note = {
       id: notes.length + 1,
       text: newNote,
@@ -34,60 +25,33 @@ const NoteScreen = () => {
     setModalVisible(false);
   };
 
+  const handleInputChange = (textInput: string) => {
+    setNewNote(textInput);
+  };
+
+  const hideModal = () => {
+    setModalVisible(false);
+  };
+  const showModal = () => {
+    setModalVisible(true);
+  };
+
   return (
     <View style={styles.container}>
-      <FlatList
-        data={notes}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.noteItem}>
-            <Text style={styles.noteText}>{item.text}</Text>
-          </View>
-        )}
-      />
-      <TouchableOpacity
-        onPress={() => setModalVisible(true)}
-        style={styles.button}
-      >
+      {/* Node List */}
+      <NoteList notes={notes} />
+      <TouchableOpacity onPress={showModal} style={styles.button}>
         <Text style={styles.buttonText}>+Add Notes</Text>
       </TouchableOpacity>
 
       {/* Modal */}
-      <Modal
-        visible={modalVisible}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}></Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter note..."
-              placeholderTextColor="#aaa"
-              value={newNote}
-              onChangeText={(text) => setNewNote(text)}
-            />
-            <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={styles.cancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setNewNotes();
-                }}
-                style={styles.saveButton}
-              >
-                <Text style={styles.saveButtonText}>Save</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <AddNoteModal
+        addNote={addNote}
+        hideModal={hideModal}
+        modalVisible={modalVisible}
+        newNote={newNote}
+        onInputChange={handleInputChange}
+      />
     </View>
   );
 };
