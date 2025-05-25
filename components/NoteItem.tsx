@@ -1,14 +1,20 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Models } from "react-native-appwrite";
+import DeleteOutlineIcon from "react-native-vector-icons/MaterialIcons";
 
-interface Note {
-  note: { id: number; text: string };
+interface NoteItemProps {
+  note: Models.Document;
+  onDelete: (id: string) => Promise<void>;
 }
 
-const NoteItem = ({ note }: Note) => {
+const NoteItem: React.FC<NoteItemProps> = ({ note, onDelete }) => {
   return (
     <View style={styles.noteItem}>
       <Text style={styles.noteText}>{note.text}</Text>
+      <TouchableOpacity onPress={() => onDelete(note.$id)}>
+        <DeleteOutlineIcon name="delete-outline" size={30} color="red" />
+      </TouchableOpacity>
     </View>
   );
 };

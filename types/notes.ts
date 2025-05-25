@@ -1,8 +1,4 @@
-export interface Note {
-  id: number;
+export interface Data {
   text: string;
-}
-
-export interface Notes {
-  notes: Note[];
+  createdAt: string;
 }
