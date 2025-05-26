@@ -29,7 +29,6 @@ const NoteScreen = () => {
     id: "",
     text: "",
   });
-  const [editMode, setEditMode] = useState<boolean>(false);
 
   useEffect(() => {
     fetchNotes();
@@ -67,7 +66,8 @@ const NoteScreen = () => {
   };
 
   const handleEditClick = (id: string, text: string) => {
-    setEditMode(true);
+    setNewNote(text);
+    setUpdateModalVisible(true);
     setSelectedNote({
       id: id,
       text: text,
@@ -75,8 +75,6 @@ const NoteScreen = () => {
   };
 
   const updateNote = async (id: string, text: string) => {
-    showModal();
-    setNewNote(text);
     if (newNote.trim() === "") return;
 
     const response = await noteService.updateNote(id, newNote);
@@ -92,7 +90,7 @@ const NoteScreen = () => {
     }
 
     setNewNote("");
-    hideModal();
+    hideUpdateModal();
   };
 
   const deleteNote = async (id: string) => {
@@ -157,14 +155,16 @@ const NoteScreen = () => {
         modalVisible={modalVisible}
         newNote={newNote}
         onInputChange={handleInputChange}
-        editMode={editMode}
       />
 
       <UpdateNoteModal
         newNote={newNote}
         onInputChange={handleInputChange}
         modalVisible={updateModalVisible}
-        hideModal={hideUpdateModal}
+        onCancel={() => {
+          setNewNote("");
+          hideUpdateModal();
+        }}
         selectedNote={selectedNote}
         updateNote={updateNote}
       />

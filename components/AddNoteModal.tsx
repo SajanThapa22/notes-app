@@ -47,9 +47,7 @@ const AddNoteModal = ({
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={addNote} style={styles.saveButton}>
-              <Text style={styles.saveButtonText}>
-                {editMode ? "Update" : "Save"}
-              </Text>
+              <Text style={styles.saveButtonText}>Save</Text>
             </TouchableOpacity>
           </View>
         </View>

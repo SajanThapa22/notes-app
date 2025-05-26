@@ -10,7 +10,7 @@ import {
 
 interface Props {
   modalVisible: boolean;
-  hideModal: () => void;
+  onCancel: () => void;
   newNote: string;
   onInputChange: (textInput: string) => void;
   updateNote: (id: string, text: string) => void;
@@ -22,7 +22,7 @@ interface Props {
 
 const UpdateNoteModal = ({
   modalVisible,
-  hideModal,
+  onCancel,
   newNote,
   onInputChange,
   updateNote,
@@ -33,7 +33,7 @@ const UpdateNoteModal = ({
       visible={modalVisible}
       animationType="slide"
       transparent
-      onRequestClose={hideModal}
+      onRequestClose={onCancel}
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
@@ -46,7 +46,7 @@ const UpdateNoteModal = ({
             onChangeText={onInputChange}
           />
           <View style={styles.modalButtons}>
-            <TouchableOpacity style={styles.cancelButton} onPress={hideModal}>
+            <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity
