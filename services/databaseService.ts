@@ -43,6 +43,18 @@ const databaseService = {
       }
     }
   },
+
+  async updateDocument(dbId: string, colId: string, id: string, data: Data) {
+    try {
+      const document = await database.updateDocument(dbId, colId, id, data);
+      return document;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error creating document", error.message);
+        return { error: error.message };
+      }
+    }
+  },
 };
 
 export default databaseService;

@@ -54,6 +54,27 @@ const NoteScreen = () => {
     hideModal();
   };
 
+  const updateNote = async (id: string, text: string) => {
+    showModal();
+    setNewNote(text);
+    if (newNote.trim() === "") return;
+
+    const response = await noteService.updateNote(id, newNote);
+
+    if (response?.error) {
+      Alert.alert("Error:", response.error);
+    } else if (response?.data && !("error" in response.data)) {
+      setNotes((prevNotes) =>
+        prevNotes.map((note) =>
+          note.$id === id ? (response.data as Models.Document) : note
+        )
+      );
+    }
+
+    setNewNote("");
+    hideModal();
+  };
+
   const deleteNote = async (id: string) => {
     Alert.alert("Delete note", "Do you want to delete this note?", [
       { text: "Cancel", style: "cancel" },
@@ -91,7 +112,7 @@ const NoteScreen = () => {
         <>
           {error && <Text style={styles.errorText}>{error}</Text>}
           {/* Node List */}
-          <NoteList notes={notes} onDelete={deleteNote} />
+          <NoteList notes={notes} onUpdate={updateNote} onDelete={deleteNote} />
         </>
       )}
       <TouchableOpacity onPress={showModal} style={styles.button}>

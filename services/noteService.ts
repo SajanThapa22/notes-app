@@ -49,6 +49,27 @@ const noteService = {
     return { data: response };
   },
 
+  async updateNote(id: string, text: string) {
+    if (!text) {
+      return { error: "Note text cannot be empty" };
+    }
+    const data = {
+      text: text,
+    };
+    const response = await databaseService.updateDocument(
+      dbId,
+      colId,
+      id,
+      data
+    );
+
+    if (response?.error) {
+      return { error: response.error };
+    }
+
+    return { data: response };
+  },
+
   async deleteNote(id: string) {
     const response = await databaseService.deleteDocument(dbId, colId, id);
     if (response?.error) {
