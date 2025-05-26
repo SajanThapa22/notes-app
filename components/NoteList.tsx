@@ -5,7 +5,8 @@ import NoteItem from "./NoteItem";
 
 interface NoteListProps {
   notes: Models.Document[];
-  onUpdate: (id: string, text: string) => Promise<void>;
+  onUpdate: (id: string, text: string) => void;
+  // onUpdate: (id: string, text: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
 }
 

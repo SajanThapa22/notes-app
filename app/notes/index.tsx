@@ -1,5 +1,6 @@
 import AddNoteModal from "@/components/AddNoteModal";
 import NoteList from "@/components/NoteList";
+import UpdateNoteModal from "@/components/updateNoteModal";
 import noteService from "@/services/noteService";
 import { useEffect, useState } from "react";
 import {
@@ -12,12 +13,23 @@ import {
 } from "react-native";
 import { Models } from "react-native-appwrite";
 
+interface Note {
+  id: string;
+  text: string;
+}
+
 const NoteScreen = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [updateModalVisible, setUpdateModalVisible] = useState<boolean>(false);
   const [newNote, setNewNote] = useState<string>("");
   const [notes, setNotes] = useState<Models.Document[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedNote, setSelectedNote] = useState({
+    id: "",
+    text: "",
+  });
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   useEffect(() => {
     fetchNotes();
@@ -52,6 +64,14 @@ const NoteScreen = () => {
 
     setNewNote("");
     hideModal();
+  };
+
+  const handleEditClick = (id: string, text: string) => {
+    setEditMode(true);
+    setSelectedNote({
+      id: id,
+      text: text,
+    });
   };
 
   const updateNote = async (id: string, text: string) => {
@@ -104,6 +124,13 @@ const NoteScreen = () => {
     setModalVisible(true);
   };
 
+  const hideUpdateModal = () => {
+    setUpdateModalVisible(false);
+  };
+  const showUpdateModal = () => {
+    setUpdateModalVisible(true);
+  };
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -112,7 +139,11 @@ const NoteScreen = () => {
         <>
           {error && <Text style={styles.errorText}>{error}</Text>}
           {/* Node List */}
-          <NoteList notes={notes} onUpdate={updateNote} onDelete={deleteNote} />
+          <NoteList
+            notes={notes}
+            onUpdate={handleEditClick}
+            onDelete={deleteNote}
+          />
         </>
       )}
       <TouchableOpacity onPress={showModal} style={styles.button}>
@@ -126,6 +157,16 @@ const NoteScreen = () => {
         modalVisible={modalVisible}
         newNote={newNote}
         onInputChange={handleInputChange}
+        editMode={editMode}
+      />
+
+      <UpdateNoteModal
+        newNote={newNote}
+        onInputChange={handleInputChange}
+        modalVisible={updateModalVisible}
+        hideModal={hideUpdateModal}
+        selectedNote={selectedNote}
+        updateNote={updateNote}
       />
     </View>
   );

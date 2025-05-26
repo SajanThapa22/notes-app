@@ -13,17 +13,20 @@ interface Props {
   hideModal: () => void;
   newNote: string;
   onInputChange: (textInput: string) => void;
-  addNote: () => void;
-  editMode?: boolean;
+  updateNote: (id: string, text: string) => void;
+  selectedNote: {
+    id: string;
+    text: string;
+  };
 }
 
-const AddNoteModal = ({
+const UpdateNoteModal = ({
   modalVisible,
   hideModal,
   newNote,
   onInputChange,
-  addNote,
-  editMode,
+  updateNote,
+  selectedNote,
 }: Props) => {
   return (
     <Modal
@@ -46,10 +49,11 @@ const AddNoteModal = ({
             <TouchableOpacity style={styles.cancelButton} onPress={hideModal}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={addNote} style={styles.saveButton}>
-              <Text style={styles.saveButtonText}>
-                {editMode ? "Update" : "Save"}
-              </Text>
+            <TouchableOpacity
+              onPress={() => updateNote(selectedNote.id, selectedNote.text)}
+              style={styles.saveButton}
+            >
+              <Text style={styles.saveButtonText}>Update</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -58,7 +62,7 @@ const AddNoteModal = ({
   );
 };
 
-export default AddNoteModal;
+export default UpdateNoteModal;
 
 const styles = StyleSheet.create({
   button: {
