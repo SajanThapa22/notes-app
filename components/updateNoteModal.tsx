@@ -13,7 +13,7 @@ interface Props {
   onCancel: () => void;
   newNote: string;
   onInputChange: (textInput: string) => void;
-  updateNote: (id: string, text: string) => void;
+  updateNote: () => void;
   selectedNote: {
     id: string;
     text: string;
@@ -49,10 +49,7 @@ const UpdateNoteModal = ({
             <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => updateNote(selectedNote.id, selectedNote.text)}
-              style={styles.saveButton}
-            >
+            <TouchableOpacity onPress={updateNote} style={styles.saveButton}>
               <Text style={styles.saveButtonText}>Update</Text>
             </TouchableOpacity>
           </View>

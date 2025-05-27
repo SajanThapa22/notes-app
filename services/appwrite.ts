@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { Client, Databases } from "react-native-appwrite";
+import { Account, Client, Databases } from "react-native-appwrite";
 
 function requiredEnv(name: string): string {
   const value = process.env[name];
@@ -29,4 +29,6 @@ switch (Platform.OS) {
 
 const database = new Databases(client);
 
-export { client, config, database };
+const account = new Account(client);
+
+export { account, client, config, database };

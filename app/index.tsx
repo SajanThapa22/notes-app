@@ -1,5 +1,5 @@
 import { PostItImage } from "@/assets/images";
-import { useRouter } from "expo-router";
+import { Href, useRouter } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function HomeScreen() {
@@ -14,7 +14,7 @@ export default function HomeScreen() {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/notes" as any)}
+        onPress={() => router.push("/notes" as Href)}
       >
         <Text style={styles.buttonText}>Get started</Text>
       </TouchableOpacity>

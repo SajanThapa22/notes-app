@@ -1,7 +1,9 @@
 import AddNoteModal from "@/components/AddNoteModal";
 import NoteList from "@/components/NoteList";
 import UpdateNoteModal from "@/components/updateNoteModal";
+import { useAuth } from "@/contexts/authContext";
 import noteService from "@/services/noteService";
+import { Href, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -19,6 +21,9 @@ interface Note {
 }
 
 const NoteScreen = () => {
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
+
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [updateModalVisible, setUpdateModalVisible] = useState<boolean>(false);
   const [newNote, setNewNote] = useState<string>("");
@@ -29,6 +34,12 @@ const NoteScreen = () => {
     id: "",
     text: "",
   });
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.replace("/auth" as Href);
+    }
+  }, [user, authLoading]);
 
   useEffect(() => {
     fetchNotes();
@@ -65,7 +76,7 @@ const NoteScreen = () => {
     hideModal();
   };
 
-  const handleEditClick = (id: string, text: string) => {
+  const handleClickUpdate = (id: string, text: string) => {
     setNewNote(text);
     setUpdateModalVisible(true);
     setSelectedNote({
@@ -74,17 +85,22 @@ const NoteScreen = () => {
     });
   };
 
-  const updateNote = async (id: string, text: string) => {
+  const updateNote = async () => {
     if (newNote.trim() === "") return;
 
-    const response = await noteService.updateNote(id, newNote);
+    const response = await noteService.updateNote(
+      selectedNote.id,
+      selectedNote.text
+    );
 
     if (response?.error) {
       Alert.alert("Error:", response.error);
     } else if (response?.data && !("error" in response.data)) {
       setNotes((prevNotes) =>
         prevNotes.map((note) =>
-          note.$id === id ? (response.data as Models.Document) : note
+          note.$id === selectedNote.id
+            ? (response.data as Models.Document)
+            : note
         )
       );
     }
@@ -139,7 +155,7 @@ const NoteScreen = () => {
           {/* Node List */}
           <NoteList
             notes={notes}
-            onUpdate={handleEditClick}
+            onUpdate={handleClickUpdate}
             onDelete={deleteNote}
           />
         </>

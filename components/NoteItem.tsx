@@ -21,7 +21,7 @@ const NoteItem: React.FC<NoteItemProps> = ({ note, onUpdate, onDelete }) => {
       <View style={styles.buttonsContainer}>
         {/* Update button */}
         <TouchableOpacity onPress={() => onUpdate(note.$id, note.text)}>
-          <EditOutlinedIcon name="edit" size={30} color="black" />
+          <EditOutlinedIcon name="edit" size={30} color="dodgerblue" />
         </TouchableOpacity>
 
         {/* Delete button */}
