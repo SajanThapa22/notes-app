@@ -45,6 +45,7 @@ const NoteScreen = () => {
     fetchNotes();
   }, []);
 
+  //Get notes
   const fetchNotes = async () => {
     setLoading(true);
     const response = await noteService.getNotes();
@@ -56,7 +57,6 @@ const NoteScreen = () => {
       setNotes(response.data);
       setError(null);
     }
-
     setLoading(false);
   };
 
@@ -76,6 +76,7 @@ const NoteScreen = () => {
     hideModal();
   };
 
+  //Handle update icon click
   const handleClickUpdate = (id: string, text: string) => {
     setNewNote(text);
     setUpdateModalVisible(true);
@@ -85,6 +86,7 @@ const NoteScreen = () => {
     });
   };
 
+  //Update note
   const updateNote = async () => {
     if (newNote.trim() === "") return;
 
@@ -109,6 +111,7 @@ const NoteScreen = () => {
     hideUpdateModal();
   };
 
+  //Delete note
   const deleteNote = async (id: string) => {
     Alert.alert("Delete note", "Do you want to delete this note?", [
       { text: "Cancel", style: "cancel" },
@@ -141,10 +144,6 @@ const NoteScreen = () => {
   const hideUpdateModal = () => {
     setUpdateModalVisible(false);
   };
-  const showUpdateModal = () => {
-    setUpdateModalVisible(true);
-  };
-
   return (
     <View style={styles.container}>
       {loading ? (

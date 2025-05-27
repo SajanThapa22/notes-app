@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
     null
   );
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     checkUser();
