@@ -1,3 +1,4 @@
+import colors from "@/app/config/colors";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Models } from "react-native-appwrite";
@@ -21,7 +22,7 @@ const NoteItem: React.FC<NoteItemProps> = ({ note, onUpdate, onDelete }) => {
       <View style={styles.buttonsContainer}>
         {/* Update button */}
         <TouchableOpacity onPress={() => onUpdate(note.$id, note.text)}>
-          <EditOutlinedIcon name="edit" size={30} color="dodgerblue" />
+          <EditOutlinedIcon name="edit" size={30} color={colors.accent.main} />
         </TouchableOpacity>
 
         {/* Delete button */}
@@ -38,21 +39,23 @@ export default NoteItem;
 const styles = StyleSheet.create({
   noteText: {
     fontSize: 18,
-    color: "#666",
+    color: colors.text.secondary,
     textAlign: "center",
   },
   noteItem: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
-    padding: 15,
-    borderRadius: 5,
+    backgroundColor: colors.neutral.offWhite,
+    padding: 10,
+    borderRadius: 10,
     marginVertical: 5,
+    borderWidth: 1,
+    borderColor: colors.neutral.lightGray,
   },
   buttonsContainer: {
     flexDirection: "row",
-    gap: 4,
+    gap: 8,
     justifyContent: "space-between",
     alignItems: "center",
   },

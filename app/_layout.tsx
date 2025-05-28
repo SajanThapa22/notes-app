@@ -1,6 +1,7 @@
 import { AuthProvider, useAuth } from "@/contexts/authContext";
 import { Stack } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import colors from "./config/colors";
 
 const HeaderLogout = () => {
   const { user, logout } = useAuth();
@@ -18,9 +19,9 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: "#ff8c00",
+            backgroundColor: colors.primary.main,
           },
-          headerTintColor: "#fff",
+          headerTintColor: colors.neutral.white,
           headerTitleStyle: {
             fontSize: 20,
             fontWeight: "bold",
@@ -29,7 +30,7 @@ export default function RootLayout() {
           contentStyle: {
             paddingHorizontal: 10,
             paddingTop: 10,
-            backgroundColor: "#fff",
+            backgroundColor: colors.neutral.white,
           },
         }}
       >
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    backgroundColor: "#ff3b30",
+    backgroundColor: colors.primary.light,
     borderRadius: 8,
   },
   logoutText: {

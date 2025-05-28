@@ -1,6 +1,6 @@
-import AddNoteModal from "@/components/AddNoteModal";
-import NoteList from "@/components/NoteList";
-import UpdateNoteModal from "@/components/updateNoteModal";
+import AddNoteModal from "@/components/notes/AddNoteModal";
+import NoteList from "@/components/notes/NoteList";
+import UpdateNoteModal from "@/components/notes/updateNoteModal";
 import { useAuth } from "@/contexts/authContext";
 import noteService from "@/services/noteService";
 import { Href, useRouter } from "expo-router";
@@ -8,17 +8,24 @@ import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import { Models } from "react-native-appwrite";
+import colors from "../config/colors";
 
-interface Note {
-  id: string;
-  text: string;
-}
+import {
+  default as AddIcon,
+  default as EventNoteIcon,
+} from "react-native-vector-icons/MaterialIcons";
+
+// interface Note {
+//   id: string;
+//   text: string;
+// }
 
 const NoteScreen = () => {
   const router = useRouter();
@@ -151,22 +158,33 @@ const NoteScreen = () => {
     setUpdateModalVisible(false);
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {loading ? (
         <ActivityIndicator size={"large"} color={"#007bff"} />
       ) : (
         <>
           {error && <Text style={styles.errorText}>{error}</Text>}
-          {/* Node List */}
-          <NoteList
-            notes={notes}
-            onUpdate={handleClickUpdate}
-            onDelete={deleteNote}
-          />
+
+          {notes.length === 0 ? (
+            <View style={styles.noNotesContainer}>
+              <EventNoteIcon
+                name="event"
+                size={60}
+                color={colors.neutral.lightGray}
+              />
+              <Text style={styles.noNotesText}>No notes added yet</Text>
+            </View>
+          ) : (
+            <NoteList
+              notes={notes}
+              onUpdate={handleClickUpdate}
+              onDelete={deleteNote}
+            />
+          )}
         </>
       )}
-      <TouchableOpacity onPress={showModal} style={styles.button}>
-        <Text style={styles.buttonText}>+Add Notes</Text>
+      <TouchableOpacity onPress={showModal} style={styles.addNoteButton}>
+        <AddIcon name="add" size={35} color={colors.neutral.white} />
       </TouchableOpacity>
 
       {/* Modal */}
@@ -189,7 +207,7 @@ const NoteScreen = () => {
         selectedNote={selectedNote}
         updateNote={updateNote}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -199,92 +217,39 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: colors.neutral.white,
   },
-  noteText: {
-    fontSize: 18,
-    color: "#666",
-    textAlign: "center",
-  },
-  noteItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  addNoteButton: {
+    position: "absolute",
+    width: 60,
+    height: 60,
+    aspectRatio: 1,
+    bottom: 25,
+    right: 15,
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
-    padding: 15,
-    borderRadius: 5,
-    marginVertical: 5,
-  },
-  button: {
-    backgroundColor: "#007bff",
-    borderRadius: 12,
     paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 10,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: colors.accent.main,
+    borderRadius: "50%",
     justifyContent: "center",
-    alignItems: "center",
-    fontSize: 16,
-    marginBottom: 15,
-  },
-  modalContent: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 10,
-    width: "80%",
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  modalButtons: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  cancelButton: {
-    backgroundColor: "#ccc",
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 10,
-    alignItems: "center",
-  },
-  cancelButtonText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  saveButton: {
-    backgroundColor: "#007bff",
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 10,
-    alignItems: "center",
-  },
-  saveButtonText: {
-    fontSize: 16,
-    color: "#fff",
   },
   errorText: {
     color: "red",
     textAlign: "center",
     marginBottom: 10,
     fontSize: 17,
+  },
+  noNotesContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    flexDirection: "column",
+    height: "70%",
+  },
+  noNotesText: {
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.text.secondary,
+    marginTop: 15,
   },
 });

@@ -1,3 +1,4 @@
+import colors from "@/app/config/colors";
 import React from "react";
 import {
   Modal,
@@ -72,20 +73,20 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: colors.neutral.lightGray,
     borderRadius: 8,
     padding: 10,
     marginBottom: 10,
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: colors.transparent.black,
     justifyContent: "center",
     alignItems: "center",
     fontSize: 16,
   },
   modalContent: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.neutral.white,
     padding: 20,
     borderRadius: 10,
     width: "80%",
@@ -99,29 +100,29 @@ const styles = StyleSheet.create({
   modalButtons: {
     flexDirection: "row",
     justifyContent: "space-between",
+    width: "100%",
+    gap: 10,
   },
   cancelButton: {
-    backgroundColor: "#ccc",
+    backgroundColor: colors.error.main,
     padding: 10,
     borderRadius: 5,
     flex: 1,
-    marginRight: 10,
     alignItems: "center",
   },
   cancelButtonText: {
     fontSize: 16,
-    color: "#333",
+    color: colors.neutral.white,
   },
   saveButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: colors.secondary.main,
     padding: 10,
     borderRadius: 5,
     flex: 1,
-    marginRight: 10,
     alignItems: "center",
   },
   saveButtonText: {
     fontSize: 16,
-    color: "#fff",
+    color: colors.neutral.white,
   },
 });
