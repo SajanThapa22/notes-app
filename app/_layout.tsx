@@ -4,6 +4,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 const HeaderLogout = () => {
   const { user, logout } = useAuth();
+
   return user ? (
     <TouchableOpacity style={styles.logoutButton} onPress={logout}>
       <Text style={styles.logoutText}>Logout</Text>

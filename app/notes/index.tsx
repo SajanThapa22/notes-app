@@ -42,34 +42,40 @@ const NoteScreen = () => {
   }, [user, authLoading]);
 
   useEffect(() => {
-    fetchNotes();
-  }, []);
+    if (user) {
+      fetchNotes();
+    }
+  }, [user]);
 
   //Get notes
   const fetchNotes = async () => {
     setLoading(true);
-    const response = await noteService.getNotes();
 
-    if (response.error) {
-      setError(response.error);
-      Alert.alert("Error:", response.error);
-    } else if (response.data) {
-      setNotes(response.data);
-      setError(null);
+    if (user && user.$id) {
+      const response = await noteService.getNotes(user?.$id);
+
+      if (response?.error) {
+        setError(response.error);
+        Alert.alert("Error:", response.error);
+      } else if (response?.data) {
+        setNotes(response.data);
+        setError(null);
+      }
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   //Add new note
   const addNote = async () => {
     if (newNote.trim() === "") return;
 
-    const response = await noteService.addNote(newNote);
-
-    if (response?.error) {
-      Alert.alert("Error:", response.error);
-    } else if (response?.data && !("error" in response.data)) {
-      setNotes([...notes, response.data as Models.Document]);
+    if (user && user.$id) {
+      const response = await noteService.addNote(user?.$id, newNote);
+      if (response?.error) {
+        Alert.alert("Error:", response.error);
+      } else if (response?.data && !("error" in response.data)) {
+        setNotes([...notes, response.data as Models.Document]);
+      }
     }
 
     setNewNote("");

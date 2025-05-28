@@ -20,9 +20,6 @@ const AuthScreen = () => {
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const registerUser = () => {};
-  const loginUser = () => {};
-
   const handleRegister = async () => {
     if (!email.trim() || !password.trim()) {
       setError("Email and password are required");
@@ -85,7 +82,7 @@ const AuthScreen = () => {
       {isRegistering && (
         <TextInput
           style={styles.input}
-          placeholder="Password"
+          placeholder="Confirm password"
           placeholderTextColor="#aaa"
           value={confirmPassword}
           onChangeText={setConfirmPassword}

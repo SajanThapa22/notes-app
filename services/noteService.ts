@@ -1,4 +1,4 @@
-import { ID, Models } from "react-native-appwrite";
+import { ID, Models, Query } from "react-native-appwrite";
 import databaseService from "./databaseService";
 
 function requiredEnv(name: string): string {
@@ -12,20 +12,32 @@ const dbId = requiredEnv("EXPO_PUBLIC_APPWRITE_DB_ID");
 const colId = requiredEnv("EXPO_PUBLIC_APPWRITE_COL_NOTES_ID");
 
 const noteService = {
-  async getNotes() {
-    const response = await databaseService.listDocuments(
-      requiredEnv("EXPO_PUBLIC_APPWRITE_DB_ID"),
-      requiredEnv("EXPO_PUBLIC_APPWRITE_COL_NOTES_ID")
-    );
-
-    if (!Array.isArray(response)) {
-      return { error: response.error };
+  async getNotes(user_id: string) {
+    if (!user_id) {
+      console.error("Error: Missing userId in getNotes()");
+      return {
+        data: [],
+        error: "User ID is missing",
+      };
     }
 
-    return { data: response as Models.Document[] };
+    try {
+      const response = await databaseService.listDocuments(dbId, colId, [
+        Query.equal("user_id", user_id),
+      ]);
+      return { data: response.data as Models.Document[], error: null };
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error fetching notes: ", error.message);
+      }
+    }
+
+    // if (!Array.isArray(response)) {
+    //   return { error: response.error };
+    // }
   },
 
-  async addNote(text: string) {
+  async addNote(user_id: string, text: string) {
     if (!text) {
       return { error: "Note text cannot be empty" };
     }
@@ -33,6 +45,7 @@ const noteService = {
     const data = {
       text: text,
       createdAt: new Date().toISOString(),
+      user_id: user_id,
     };
 
     const response = await databaseService.createDocument(
