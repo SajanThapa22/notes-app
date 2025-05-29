@@ -34,7 +34,7 @@ const NoteScreen = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedNote, setSelectedNote] = useState({
     id: "",
-    text: newNote,
+    text: "",
   });
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const NoteScreen = () => {
     if (newNote.trim() === "") return;
 
     if (user && user.$id) {
-      const response = await noteService.addNote(user?.$id, selectedNote.text);
+      const response = await noteService.addNote(user?.$id, newNote);
       if (response?.error) {
         Alert.alert("Error:", response.error);
       } else if (response?.data && !("error" in response.data)) {
