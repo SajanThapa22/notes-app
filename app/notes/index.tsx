@@ -22,11 +22,6 @@ import {
   default as EventNoteIcon,
 } from "react-native-vector-icons/MaterialIcons";
 
-// interface Note {
-//   id: string;
-//   text: string;
-// }
-
 const NoteScreen = () => {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
@@ -39,7 +34,7 @@ const NoteScreen = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedNote, setSelectedNote] = useState({
     id: "",
-    text: "",
+    text: newNote,
   });
 
   useEffect(() => {
@@ -77,7 +72,7 @@ const NoteScreen = () => {
     if (newNote.trim() === "") return;
 
     if (user && user.$id) {
-      const response = await noteService.addNote(user?.$id, newNote);
+      const response = await noteService.addNote(user?.$id, selectedNote.text);
       if (response?.error) {
         Alert.alert("Error:", response.error);
       } else if (response?.data && !("error" in response.data)) {
@@ -103,14 +98,17 @@ const NoteScreen = () => {
   const updateNote = async () => {
     if (newNote.trim() === "") return;
 
-    const response = await noteService.updateNote(
-      selectedNote.id,
-      selectedNote.text
-    );
+    console.log(selectedNote.id, selectedNote.text);
+
+    const response = await noteService.updateNote(selectedNote.id, newNote);
+
+    console.log("updating");
 
     if (response?.error) {
+      console.log("error in if");
       Alert.alert("Error:", response.error);
     } else if (response?.data && !("error" in response.data)) {
+      console.log("error in else if");
       setNotes((prevNotes) =>
         prevNotes.map((note) =>
           note.$id === selectedNote.id
@@ -204,7 +202,6 @@ const NoteScreen = () => {
           setNewNote("");
           hideUpdateModal();
         }}
-        selectedNote={selectedNote}
         updateNote={updateNote}
       />
     </SafeAreaView>

@@ -15,10 +15,6 @@ interface Props {
   newNote: string;
   onInputChange: (textInput: string) => void;
   updateNote: () => void;
-  selectedNote: {
-    id: string;
-    text: string;
-  };
 }
 
 const UpdateNoteModal = ({
@@ -27,7 +23,6 @@ const UpdateNoteModal = ({
   newNote,
   onInputChange,
   updateNote,
-  selectedNote,
 }: Props) => {
   return (
     <Modal
