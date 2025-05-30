@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import colors from "./config/colors";
 
 export default function HomeScreen() {
@@ -32,22 +33,24 @@ export default function HomeScreen() {
   }
 
   return (
-    <Screen>
-      <View style={styles.container}>
-        <Image style={styles.image} source={PostItImage} />
-        <Text style={styles.title}>Welcome to Notes App</Text>
-        <Text style={styles.subTitle}>
-          Capture your thoughts anytime, anywhere
-        </Text>
+    <SafeAreaProvider>
+      <Screen>
+        <View style={styles.container}>
+          <Image style={styles.image} source={PostItImage} />
+          <Text style={styles.title}>Welcome to Notes App</Text>
+          <Text style={styles.subTitle}>
+            Capture your thoughts anytime, anywhere
+          </Text>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => router.push("/notes" as Href)}
-        >
-          <Text style={styles.buttonText}>Get started</Text>
-        </TouchableOpacity>
-      </View>
-    </Screen>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push("/notes" as Href)}
+          >
+            <Text style={styles.buttonText}>Get started</Text>
+          </TouchableOpacity>
+        </View>
+      </Screen>
+    </SafeAreaProvider>
   );
 }
 

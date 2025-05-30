@@ -11,7 +11,7 @@ This is a React Native application built with Expo that allows users to manage p
 
 ## Application Demo
 
-![This application allows users to manage personal notes with authentication](app/assets/images/demo.gif)
+![App demo GIF](app/assets/images/demo.gif)
 
 ## Functionality Overview
 
