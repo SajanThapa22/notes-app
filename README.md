@@ -11,7 +11,7 @@ This is a React Native application built with Expo that allows users to manage p
 
 ## Application Demo
 
-![Notes App demo gif]([app/assets/images/demo.gif](https://github.com/SajanThapa22/notes-app/blob/main/assets/images/notes-app-demo.gif?raw=true))
+![Notes App demo gif](https://github.com/SajanThapa22/notes-app/blob/main/assets/images/notes-app-demo.gif)
 
 ## Functionality Overview
 
