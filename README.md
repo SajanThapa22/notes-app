@@ -53,12 +53,12 @@ Set up an Appwrite project and configure the following:
 - **Authentication** enabled
 - **Database** collection for notes
 - **Environment variables** (`.env`) containing:
-  - EXPO_PUBLIC_APPWRITE_ENDPOINT=<your-appwrite-endpoint>
-  - EXPO_PUBLIC_APPWRITE_PROJECT_ID=<your-project-id>
-  - EXPO_PUBLIC_APPWRITE_DB_ID=<your-database-id>
-  - EXPO_PUBLIC_APPWRITE_COL_NOTES_ID=<your-collection-id>
-  - EXPO_PUBLIC_APPWRITE_BUNDLE_ID=<your-ios-bundle-id>
-  - EXPO_PUBLIC_APPWRITE_PACKAGE_NAME=<your-android-package-name>##
+  - EXPO_PUBLIC_APPWRITE_ENDPOINT=your-appwrite-endpoint
+  - EXPO_PUBLIC_APPWRITE_PROJECT_ID=your-project-id
+  - EXPO_PUBLIC_APPWRITE_DB_ID=your-database-id
+  - EXPO_PUBLIC_APPWRITE_COL_NOTES_ID=your-collection-id
+  - EXPO_PUBLIC_APPWRITE_BUNDLE_ID=your-ios-bundle-id
+  - EXPO_PUBLIC_APPWRITE_PACKAGE_NAME=your-android-package-name
 
 # 4. Start the Expo App
 
