@@ -11,9 +11,8 @@ This is a React Native application built with Expo that allows users to manage p
 
 ## Application Demo
 
-![Notes App demo gif](https://github.com/SajanThapa22/notes-app/blob/main/assets/images/notes-app-demo.gif)
-
-## Functionality Overview
+![App demo GI![Notes App demo gif](https://github.com/SajanThapa22/notes-app/blob/main/assets/images/notes-app-demo.gif)
+ity Overview
 
 The app offers the following features:
 
@@ -53,11 +52,12 @@ Set up an Appwrite project and configure the following:
 - **Authentication** enabled
 - **Database** collection for notes
 - **Environment variables** (`.env`) containing:
-
-  - `APPWRITE_ENDPOINT`
-  - `APPWRITE_PROJECT_ID`
-  - `APPWRITE_DATABASE_ID`
-  - `APPWRITE_COLLECTION_ID`
+  - EXPO_PUBLIC_APPWRITE_ENDPOINT=<your-appwrite-endpoint>
+  - EXPO_PUBLIC_APPWRITE_PROJECT_ID=<your-project-id>
+  - EXPO_PUBLIC_APPWRITE_DB_ID=<your-database-id>
+  - EXPO_PUBLIC_APPWRITE_COL_NOTES_ID=<your-collection-id>
+  - EXPO_PUBLIC_APPWRITE_BUNDLE_ID=<your-ios-bundle-id>
+  - EXPO_PUBLIC_APPWRITE_PACKAGE_NAME=<your-android-package-name>
 
 ### 4. Start the Expo App
 
