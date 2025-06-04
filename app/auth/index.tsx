@@ -1,3 +1,4 @@
+import CustomKeyboardView from "@/components/shared/CustomKeyboardView";
 import { useAuth } from "@/contexts/authContext";
 import { Href, useRouter } from "expo-router";
 import { useState } from "react";
@@ -55,60 +56,62 @@ const AuthScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>{isRegistering ? "Sign up" : "Login"}</Text>
-      {error && <Text style={styles.error}>{error}</Text>}
+    <CustomKeyboardView>
+      <View style={styles.container}>
+        <Text style={styles.header}>{isRegistering ? "Sign up" : "Login"}</Text>
+        {error && <Text style={styles.error}>{error}</Text>}
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor="#aaa"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor="#aaa"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        textContentType="none"
-      />
-
-      {isRegistering && (
         <TextInput
           style={styles.input}
-          placeholder="Confirm password"
+          placeholder="Email"
           placeholderTextColor="#aaa"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#aaa"
+          value={password}
+          onChangeText={setPassword}
           secureTextEntry
           textContentType="none"
         />
-      )}
 
-      {isRegistering ? (
-        <TouchableOpacity onPress={handleRegister} style={styles.button}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      )}
+        {isRegistering && (
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm password"
+            placeholderTextColor="#aaa"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry
+            textContentType="none"
+          />
+        )}
 
-      <TouchableOpacity onPress={() => setIsRegistering(!isRegistering)}>
-        <Text style={styles.switchText}>
-          {isRegistering
-            ? "Already have an account? login"
-            : "Don't have an account? Sign Up"}
-        </Text>
-      </TouchableOpacity>
-    </View>
+        {isRegistering ? (
+          <TouchableOpacity onPress={handleRegister} style={styles.button}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={handleLogin} style={styles.button}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+        )}
+
+        <TouchableOpacity onPress={() => setIsRegistering(!isRegistering)}>
+          <Text style={styles.switchText}>
+            {isRegistering
+              ? "Already have an account? login"
+              : "Don't have an account? Sign Up"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </CustomKeyboardView>
   );
 };
 
