@@ -98,17 +98,11 @@ const NoteScreen = () => {
   const updateNote = async () => {
     if (newNote.trim() === "") return;
 
-    console.log(selectedNote.id, selectedNote.text);
-
     const response = await noteService.updateNote(selectedNote.id, newNote);
 
-    console.log("updating");
-
     if (response?.error) {
-      console.log("error in if");
       Alert.alert("Error:", response.error);
     } else if (response?.data && !("error" in response.data)) {
-      console.log("error in else if");
       setNotes((prevNotes) =>
         prevNotes.map((note) =>
           note.$id === selectedNote.id
